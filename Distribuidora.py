@@ -7,14 +7,14 @@ def carregar_dados_json(caminho_arquivo):
         if arquivo.is_file():
             with arquivo.open('r') as f:
                 dados = json.load(f)
-            return dados.get("dias", [])
+            return dados  
         else:
             raise FileNotFoundError(f"Arquivo {caminho_arquivo} nao encontrado.")
     except json.JSONDecodeError as e:
         return f"Erro ao carregar JSON: {e}"
 
 def calcular_faturamento(dados_faturamento):
-    faturamento_validos = [dia['faturamento'] for dia in dados_faturamento if dia['faturamento'] > 0]
+    faturamento_validos = [dia['valor'] for dia in dados_faturamento if dia['valor'] > 0]
 
     if not faturamento_validos:
         return "ERRO: Nao ha faturamentos validos."
@@ -43,6 +43,6 @@ if __name__ == "__main__":
         if isinstance(resultados, str):
             print(resultados)
         else:
-            print(f"Menor faturamento: {resultados['menor_faturamento']}")
-            print(f"Maior faturamento: {resultados['maior_faturamento']}")
+            print(f"Menor faturamento: {resultados['menor_faturamento']:.2f}")
+            print(f"Maior faturamento: {resultados['maior_faturamento']:.2f}")
             print(f"Numero de dias acima da media: {resultados['dias_acima_media']}")
